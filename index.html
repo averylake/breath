@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="canonical" href="https://breath.averylakeofficial.com">
+
+    <title>∞ // THE BREATH | The Digital Audit</title>
+    <meta name="description" content="Protocol ∞: The Breath. The machine never breathes. You can.">
+    <meta name="author" content="Avery Lake">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://breath.averylakeofficial.com">
+    <meta property="og:title" content="∞ // THE BREATH">
+    <meta property="og:description" content="The machine never breathes. You can.">
+    <meta property="og:image" content="https://breath.averylakeofficial.com/preview.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://breath.averylakeofficial.com/preview.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%23ffffff'/></svg>">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        /* ============================================== */
+        /* === UNIFIED DESIGN SYSTEM v2.0 === */
+        /* === INVERTED FOR THE BREATH === */
+        /* ============================================== */
+        :root {
+            --bg-void: #ffffff;
+            --bg-light: #f8f8f8;
+            --text-main: #000000;
+            --text-dim: rgba(0, 0, 0, 0.4);
+            --text-muted: rgba(0, 0, 0, 0.6);
+
+            /* Protocol ∞: Inverted - Black on White */
+            --accent-primary: #000000;
+            --accent-glow: rgba(0, 0, 0, 0.2);
+            --accent-secondary: rgba(0, 0, 0, 0.5);
+
+            --glass-bg: rgba(255, 255, 255, 0.4);
+            --glass-border: rgba(0, 0, 0, 0.15);
+            --border-dim: rgba(0, 0, 0, 0.2);
+
+            --font-main: 'Space Grotesk', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+
+            --breath-duration: 10s;
+            /* 5s in, 5s out - optimal for relaxation */
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-void);
+            font-family: var(--font-main);
+            color: var(--text-main);
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* === GATEKEEPER === */
+        #gatekeeper-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #fff;
+            z-index: 99999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+        }
+
+        #gatekeeper-overlay h1 {
+            color: var(--accent-primary);
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        #gatekeeper-overlay p {
+            color: var(--text-dim);
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        /* === STILLNESS GATE === */
+        #stillness-gate {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-void);
+            z-index: 15000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            transition: opacity 0.8s ease;
+        }
+
+        #stillness-gate.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .gate-top {
+            margin-top: 25vh;
+            margin-bottom: auto;
+        }
+
+        .gate-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .gate-bottom {
+            margin-top: auto;
+            padding-bottom: 20px;
+        }
+
+        .gate-instruction {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-main);
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+
+        .gate-circle-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+
+        .gate-circle {
+            width: 150px;
+            height: 150px;
+            border: 2px solid var(--accent-primary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .gate-circle:not(.holding) {
+            animation: gatePulse 2s ease-in-out infinite;
+        }
+
+        .gate-circle.holding {
+            background: rgba(0, 0, 0, 0.05);
+            box-shadow: 0 0 40px var(--accent-glow);
+        }
+
+        @keyframes gatePulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 30px var(--accent-glow);
+            }
+        }
+
+        .gate-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 150px;
+            height: 150px;
+            pointer-events: none;
+        }
+
+        .gate-progress circle {
+            fill: none;
+            stroke: var(--accent-primary);
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-dasharray: 471;
+            stroke-dashoffset: 471;
+            transform: rotate(-90deg);
+            transform-origin: center;
+            transition: stroke-dashoffset 0.1s linear;
+        }
+
+        .gate-inner-text {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .gate-feedback {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            min-height: 20px;
+            transition: opacity 0.3s;
+        }
+
+        .gate-feedback.error {
+            color: var(--accent-primary);
+        }
+
+        /* === START OVERLAY === */
+        #start-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-void);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .start-title {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .start-by {
+            font-size: 11px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+        }
+
+        .start-artist {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 4px;
+            margin-bottom: 50px;
+        }
+
+        .btn-initialize {
+            background: transparent;
+            border: 1px solid var(--accent-primary);
+            color: var(--accent-primary);
+            font-family: var(--font-main);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 18px 50px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+        }
+
+        .btn-initialize:hover {
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .sound-note {
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        /* === MAIN LAYOUT === */
+        .main-container {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 1s ease;
+            cursor: pointer;
+        }
+
+        .main-container.active {
+            opacity: 1;
+        }
+
+        /* TOP BAR */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .protocol-title {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .protocol-subtitle {
+            font-size: 9px;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            margin-top: 4px;
+            text-transform: uppercase;
+        }
+
+        .audio-toggle {
+            font-family: var(--font-main);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 1px solid var(--border-dim);
+            background: transparent;
+            color: var(--text-dim);
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .audio-toggle:hover {
+            border-color: var(--text-muted);
+            color: var(--text-muted);
+        }
+
+        .audio-toggle.active {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        /* CENTER CONTENT */
+        .center-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .experience-prompt {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            text-align: center;
+            line-height: 1.6;
+            min-height: 40px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .experience-prompt::after {
+            content: '|';
+            animation: blink 0.7s infinite;
+            color: var(--accent-primary);
+        }
+
+        .experience-prompt.done::after {
+            display: none;
+        }
+
+        @keyframes blink {
+
+            0%,
+            50% {
+                opacity: 1;
+            }
+
+            51%,
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* === BREATHING CIRCLE === */
+        .breath-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .breath-circle {
+            position: absolute;
+            border: 1px solid var(--accent-primary);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .breath-circle.active {
+            opacity: 1;
+        }
+
+        .breath-circle.main {
+            width: 100px;
+            height: 100px;
+            border: none;
+            background: #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 5s ease-in-out;
+            animation: breatheColor 10s linear infinite, breatheScale 10s ease-in-out infinite;
+        }
+
+        /* Ultra-smooth color transition - BLACK → WHITE → BLACK (inhale=white, exhale=black) */
+        @keyframes breatheColor {
+            0% {
+                background: #000000;
+                box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            }
+
+            2% {
+                background: #0d0d0d;
+                box-shadow: 0 0 30px rgba(13, 13, 13, 0.5);
+            }
+
+            4% {
+                background: #1a1a1a;
+                box-shadow: 0 0 31px rgba(26, 26, 26, 0.5);
+            }
+
+            6% {
+                background: #262626;
+                box-shadow: 0 0 31px rgba(38, 38, 38, 0.5);
+            }
+
+            8% {
+                background: #333333;
+                box-shadow: 0 0 32px rgba(51, 51, 51, 0.5);
+            }
+
+            10% {
+                background: #404040;
+                box-shadow: 0 0 32px rgba(64, 64, 64, 0.5);
+            }
+
+            12% {
+                background: #4d4d4d;
+                box-shadow: 0 0 33px rgba(77, 77, 77, 0.5);
+            }
+
+            14% {
+                background: #595959;
+                box-shadow: 0 0 33px rgba(89, 89, 89, 0.5);
+            }
+
+            16% {
+                background: #666666;
+                box-shadow: 0 0 34px rgba(102, 102, 102, 0.5);
+            }
+
+            18% {
+                background: #737373;
+                box-shadow: 0 0 34px rgba(115, 115, 115, 0.5);
+            }
+
+            20% {
+                background: #808080;
+                box-shadow: 0 0 35px rgba(128, 128, 128, 0.5);
+            }
+
+            22% {
+                background: #8c8c8c;
+                box-shadow: 0 0 35px rgba(140, 140, 140, 0.5);
+            }
+
+            24% {
+                background: #999999;
+                box-shadow: 0 0 36px rgba(153, 153, 153, 0.5);
+            }
+
+            26% {
+                background: #a6a6a6;
+                box-shadow: 0 0 36px rgba(166, 166, 166, 0.5);
+            }
+
+            28% {
+                background: #b3b3b3;
+                box-shadow: 0 0 37px rgba(179, 179, 179, 0.5);
+            }
+
+            30% {
+                background: #bfbfbf;
+                box-shadow: 0 0 37px rgba(191, 191, 191, 0.5);
+            }
+
+            32% {
+                background: #cccccc;
+                box-shadow: 0 0 38px rgba(204, 204, 204, 0.5);
+            }
+
+            34% {
+                background: #d9d9d9;
+                box-shadow: 0 0 38px rgba(217, 217, 217, 0.5);
+            }
+
+            36% {
+                background: #e6e6e6;
+                box-shadow: 0 0 39px rgba(230, 230, 230, 0.5);
+            }
+
+            38% {
+                background: #f2f2f2;
+                box-shadow: 0 0 39px rgba(242, 242, 242, 0.5);
+            }
+
+            40% {
+                background: #f7f7f7;
+                box-shadow: 0 0 40px rgba(247, 247, 247, 0.5);
+            }
+
+            42% {
+                background: #fafafa;
+                box-shadow: 0 0 40px rgba(250, 250, 250, 0.5);
+            }
+
+            44% {
+                background: #fcfcfc;
+                box-shadow: 0 0 40px rgba(252, 252, 252, 0.5);
+            }
+
+            46% {
+                background: #fefefe;
+                box-shadow: 0 0 40px rgba(254, 254, 254, 0.5);
+            }
+
+            48% {
+                background: #ffffff;
+                box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
+            }
+
+            50% {
+                background: #ffffff;
+                box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
+            }
+
+            52% {
+                background: #ffffff;
+                box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
+            }
+
+            54% {
+                background: #fefefe;
+                box-shadow: 0 0 40px rgba(254, 254, 254, 0.5);
+            }
+
+            56% {
+                background: #fcfcfc;
+                box-shadow: 0 0 40px rgba(252, 252, 252, 0.5);
+            }
+
+            58% {
+                background: #fafafa;
+                box-shadow: 0 0 40px rgba(250, 250, 250, 0.5);
+            }
+
+            60% {
+                background: #f7f7f7;
+                box-shadow: 0 0 40px rgba(247, 247, 247, 0.5);
+            }
+
+            62% {
+                background: #f2f2f2;
+                box-shadow: 0 0 39px rgba(242, 242, 242, 0.5);
+            }
+
+            64% {
+                background: #e6e6e6;
+                box-shadow: 0 0 39px rgba(230, 230, 230, 0.5);
+            }
+
+            66% {
+                background: #d9d9d9;
+                box-shadow: 0 0 38px rgba(217, 217, 217, 0.5);
+            }
+
+            68% {
+                background: #cccccc;
+                box-shadow: 0 0 38px rgba(204, 204, 204, 0.5);
+            }
+
+            70% {
+                background: #bfbfbf;
+                box-shadow: 0 0 37px rgba(191, 191, 191, 0.5);
+            }
+
+            72% {
+                background: #b3b3b3;
+                box-shadow: 0 0 37px rgba(179, 179, 179, 0.5);
+            }
+
+            74% {
+                background: #a6a6a6;
+                box-shadow: 0 0 36px rgba(166, 166, 166, 0.5);
+            }
+
+            76% {
+                background: #999999;
+                box-shadow: 0 0 36px rgba(153, 153, 153, 0.5);
+            }
+
+            78% {
+                background: #8c8c8c;
+                box-shadow: 0 0 35px rgba(140, 140, 140, 0.5);
+            }
+
+            80% {
+                background: #808080;
+                box-shadow: 0 0 35px rgba(128, 128, 128, 0.5);
+            }
+
+            82% {
+                background: #737373;
+                box-shadow: 0 0 34px rgba(115, 115, 115, 0.5);
+            }
+
+            84% {
+                background: #666666;
+                box-shadow: 0 0 34px rgba(102, 102, 102, 0.5);
+            }
+
+            86% {
+                background: #595959;
+                box-shadow: 0 0 33px rgba(89, 89, 89, 0.5);
+            }
+
+            88% {
+                background: #4d4d4d;
+                box-shadow: 0 0 33px rgba(77, 77, 77, 0.5);
+            }
+
+            90% {
+                background: #404040;
+                box-shadow: 0 0 32px rgba(64, 64, 64, 0.5);
+            }
+
+            92% {
+                background: #333333;
+                box-shadow: 0 0 32px rgba(51, 51, 51, 0.5);
+            }
+
+            94% {
+                background: #262626;
+                box-shadow: 0 0 31px rgba(38, 38, 38, 0.5);
+            }
+
+            96% {
+                background: #1a1a1a;
+                box-shadow: 0 0 31px rgba(26, 26, 26, 0.5);
+            }
+
+            98% {
+                background: #0d0d0d;
+                box-shadow: 0 0 30px rgba(13, 13, 13, 0.5);
+            }
+
+            100% {
+                background: #000000;
+                box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            }
+        }
+
+        /* Scale animation synced with color */
+        @keyframes breatheScale {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(2.2);
+            }
+        }
+
+        .breath-circle.ring {
+            border-width: 1px;
+            opacity: 0.3;
+        }
+
+        .breath-phase {
+            position: absolute;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            transition: opacity 0.3s;
+            z-index: 10;
+        }
+
+        /* BREATH COUNTER */
+        .breath-counter {
+            margin-top: 30px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: var(--accent-primary);
+            position: relative;
+            z-index: 10;
+        }
+
+        .breath-counter span {
+            font-size: 36px;
+            font-weight: 300;
+            display: block;
+            margin-top: 10px;
+        }
+
+        /* TOUCH INSTRUCTION */
+        .touch-instruction {
+            position: absolute;
+            bottom: 100px;
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        /* BOTTOM BAR */
+        .bottom-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-left {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .reset-link {
+            font-size: 9px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .reset-link:hover {
+            color: var(--text-main);
+        }
+
+        .footer-credit {
+            font-size: 9px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            text-decoration: none;
+        }
+
+        .footer-credit:hover {
+            color: var(--text-main);
+        }
+
+        .music-credit {
+            font-size: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-continue {
+            font-family: var(--font-main);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 1px solid var(--border-dim);
+            background: transparent;
+            color: var(--text-main);
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-continue:hover {
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+        }
+
+        /* === DATA CAPTURE OVERLAY === */
+        #capture-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 5000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #capture-overlay.active {
+            display: flex;
+        }
+
+        .capture-modal {
+            width: 320px;
+            text-align: center;
+        }
+
+        .capture-header {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .capture-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border-dim);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            font-size: 14px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 12px;
+            margin-bottom: 30px;
+            outline: none;
+        }
+
+        .capture-input::placeholder {
+            color: var(--text-dim);
+        }
+
+        .capture-input:focus {
+            border-color: var(--accent-primary);
+        }
+
+        /* UNIFIED BUTTONS */
+        .btn-primary {
+            display: block;
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--accent-primary);
+            color: var(--accent-primary);
+            font-family: var(--font-main);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: left;
+        }
+
+        .btn-primary:hover {
+            background: rgba(0, 0, 0, 0.05);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            display: block;
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--border-dim);
+            color: var(--text-muted);
+            font-family: var(--font-main);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: left;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-main);
+            color: var(--text-main);
+        }
+
+        .btn-locked {
+            opacity: 0.4;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .btn-locked.unlocked {
+            opacity: 1;
+            cursor: pointer;
+            pointer-events: auto;
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        /* === ARTIFACT GENERATOR === */
+        #art-container {
+            position: fixed;
+            transform: translate(-9999px, -9999px);
+            width: 2250px;
+            height: 3000px;
+            /* Pure white background with light subtle texture */
+            background-color: #ffffff;
+            background-image:
+                /* Black stripe 1 - LIGHT */
+                linear-gradient(90deg, transparent 0%, transparent 39%, rgba(0, 0, 0, 0.04) 40%, rgba(0, 0, 0, 0.04) 42%, transparent 43%),
+                /* Black stripe 2 - LIGHT */
+                linear-gradient(90deg, transparent 0%, transparent 59%, rgba(0, 0, 0, 0.04) 60%, rgba(0, 0, 0, 0.04) 62%, transparent 63%),
+                /* Scanlines - VISIBLE */
+                repeating-linear-gradient(0deg, transparent 0px, rgba(0, 0, 0, 0.15) 1px, transparent 2px, transparent 3px);
+            background-size:
+                100% 100%,
+                100% 100%,
+                100% 2px;
+            background-position:
+                0 0,
+                0 0,
+                0 0;
+            padding: 150px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .art-monolith {
+            width: 1400px;
+            aspect-ratio: 9 / 16;
+            background: #ffffff;
+            border: 6px solid #000000;
+            margin: 0 auto 100px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: visible;
+        }
+
+        /* Corner brackets - Black + Gray alternating */
+        .art-monolith::before,
+        .art-monolith::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-style: solid;
+            border-width: 0;
+            pointer-events: none;
+        }
+
+        /* Top-left - BLACK */
+        .art-monolith::before {
+            top: -45px;
+            left: -45px;
+            border-left: 4px solid rgba(0, 0, 0, 1.0);
+            border-top: 4px solid rgba(0, 0, 0, 1.0);
+        }
+
+        /* Top-right - LIGHT GRAY */
+        .art-monolith::after {
+            top: -45px;
+            right: -45px;
+            border-right: 4px solid rgba(0, 0, 0, 0.12);
+            border-top: 4px solid rgba(0, 0, 0, 0.12);
+        }
+
+        /* Bottom-left - LIGHT GRAY */
+        .corner-bottom-left {
+            position: absolute;
+            bottom: -45px;
+            left: -45px;
+            width: 60px;
+            height: 60px;
+            border-left: 4px solid rgba(0, 0, 0, 0.12);
+            border-bottom: 4px solid rgba(0, 0, 0, 0.12);
+            pointer-events: none;
+        }
+
+        /* Bottom-right - BLACK */
+        .corner-bottom-right {
+            position: absolute;
+            bottom: -45px;
+            right: -45px;
+            width: 60px;
+            height: 60px;
+            border-right: 4px solid rgba(0, 0, 0, 1.0);
+            border-bottom: 4px solid rgba(0, 0, 0, 1.0);
+            pointer-events: none;
+        }
+
+        .art-breath-circles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .art-breath-ring {
+            position: absolute;
+            border: 3px solid rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+        }
+
+        .art-footer {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: auto;
+            font-size: 36px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #000000;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .main-container {
+                padding: 15px;
+            }
+
+            .breath-container {
+                width: 250px;
+                height: 250px;
+            }
+
+            .breath-circle.main {
+                width: 80px;
+                height: 80px;
+            }
+
+            .bottom-bar {
+                flex-direction: column;
+                gap: 20px;
+                align-items: center;
+            }
+
+            .footer-left {
+                align-items: center;
+                text-align: center;
+            }
+
+            .btn-continue {
+                width: 100%;
+                max-width: 260px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- GATEKEEPER -->
+    <div id="gatekeeper-overlay">
+        <h1>Restricted Terminal</h1>
+        <p>In-app browsers prevent full functionality.<br>Please open in Safari or Chrome.</p>
+    </div>
+
+    <!-- STILLNESS GATE (combined with title) -->
+    <div id="stillness-gate">
+        <!-- Top section -->
+        <div class="gate-top">
+            <div class="start-title">THE BREATH</div>
+            <div class="start-by">by</div>
+            <div class="start-artist">AVERY LAKE</div>
+        </div>
+
+        <!-- Center section (absolute center) -->
+        <div class="gate-center">
+            <div class="gate-instruction">
+                TO ENTER, YOU ARE INVITED TO BE STILL.<br>
+                HOLD THE CIRCLE FOR 10 SECONDS.
+            </div>
+
+            <div class="gate-circle-container">
+                <div class="gate-circle" id="gate-circle">
+                    <span class="gate-inner-text">HOLD</span>
+                </div>
+                <svg class="gate-progress" viewBox="0 0 150 150">
+                    <circle id="gate-progress-ring" cx="75" cy="75" r="73"></circle>
+                </svg>
+            </div>
+
+            <div class="gate-feedback" id="gate-feedback"></div>
+            <div class="sound-note" style="margin-top: 30px;">(Turn on sound for full effect)</div>
+        </div>
+
+        <!-- Bottom section (for spacing) -->
+        <div class="gate-bottom"></div>
+    </div>
+
+    <audio id="bg-audio" loop src="Stillness.mp3"></audio>
+
+    <!-- MAIN INTERFACE -->
+    <div class="main-container" id="main-interface" onclick="endProtocol(event)">
+
+        <!-- TOP BAR -->
+        <div class="top-bar" onclick="event.stopPropagation()">
+            <div>
+                <div class="protocol-title">The Breath</div>
+                <div class="protocol-subtitle">Protocol ∞</div>
+            </div>
+            <button class="audio-toggle" id="audio-toggle" onclick="toggleAudio(); event.stopPropagation();">AUDIO:
+                OFF</button>
+        </div>
+
+        <!-- CENTER -->
+        <div class="center-content">
+            <div class="experience-prompt" id="typewriter-text"></div>
+
+            <div class="breath-container" id="breath-container">
+                <div class="breath-circle main active" id="main-breath"></div>
+                <span class="breath-phase" id="breath-phase">INHALE</span>
+                <!-- Concentric rings will be added as breaths are taken -->
+            </div>
+
+            <div class="breath-counter" style="display: none;">
+                BREATHS TAKEN
+                <span id="breath-count">0</span>
+            </div>
+
+            <div class="touch-instruction" id="touch-instruction">
+                TOUCH ANYWHERE TO END • OR CONTINUE BREATHING
+            </div>
+        </div>
+
+        <!-- BOTTOM BAR -->
+        <div class="bottom-bar" onclick="event.stopPropagation()">
+            <div class="footer-left">
+                <span class="reset-link" onclick="location.reload()">RESET PROTOCOL</span>
+                <span class="footer-credit">AN ART OF AVERY LAKE EXPERIMENT</span>
+                <span style="font-size: 8px; opacity: 0.5;">© 2026 Avery Lake. All rights reserved.</span>
+                <a href="https://averylakeofficial.com/the-signal" target="_blank" class="music-credit"
+                    style="cursor: pointer;">Audio: Stillness by AVERY LAKE</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- CAPTURE OVERLAY -->
+    <div id="capture-overlay">
+        <div class="capture-modal">
+
+            <button class="btn-primary" onclick="downloadArtifact()">
+                <span style="opacity:0.5; margin-right:8px;">1.</span> DOWNLOAD ARTIFACT (IMAGE)
+            </button>
+            <button class="btn-secondary" onclick="downloadDataLog()">
+                <span style="opacity:0.5; margin-right:8px;">2.</span> DOWNLOAD UN-DATA LOG
+            </button>
+            <button class="btn-secondary btn-locked" id="print-btn" onclick="requestPrint()" style="opacity:0.3;">
+                <span style="opacity:0.5; margin-right:8px;">3.</span> COMMISSION INQUIRY (optional)
+            </button>
+
+            <div style="height:10px;"></div>
+
+            <a href="https://digital.averylakeofficial.com/" class="btn-secondary">
+                <span style="opacity:0.5; margin-right:8px;">4.</span> BACK TO HOME
+            </a>
+
+            <div style="margin-top:15px; text-align:center;">
+                <span class="reset-link" onclick="location.reload()"
+                    style="font-size:9px; border-bottom:1px solid #333; padding-bottom:2px;">RESET PROTOCOL</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ARTIFACT GENERATOR (Hidden) -->
+    <div id="art-container">
+        <div style="height:100px;"></div>
+        <div class="art-monolith">
+            <div class="art-breath-circles" id="art-circles">
+                <!-- Pure white monolith -->
+            </div>
+            <span class="corner-bottom-left"></span>
+            <span class="corner-bottom-right"></span>
+        </div>
+        <div class="art-footer">
+            <span>∞</span>
+            <span>THE BREATH</span>
+            <span>AVERY LAKE</span>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        // === GATEKEEPER ===
+        (function () {
+            const ua = navigator.userAgent || '';
+            if (/Instagram|FBAN|FBAV|TikTok/i.test(ua)) {
+                document.getElementById('gatekeeper-overlay').style.display = 'flex';
+                throw new Error("Restricted Browser");
+            }
+        })();
+
+        // === STILLNESS GATE ===
+        (function () {
+            const gate = document.getElementById('stillness-gate');
+            const circle = document.getElementById('gate-circle');
+            const progressRing = document.getElementById('gate-progress-ring');
+            const feedback = document.getElementById('gate-feedback');
+
+            const HOLD_DURATION = 10000; // 10 seconds
+            const CIRCUMFERENCE = 2 * Math.PI * 73; // 2πr where r=73
+
+            let holdStart = null;
+            let holdInterval = null;
+            let isHolding = false;
+
+            progressRing.style.strokeDasharray = CIRCUMFERENCE;
+            progressRing.style.strokeDashoffset = CIRCUMFERENCE;
+
+            function startHold(e) {
+                e.preventDefault();
+                if (isHolding) return;
+
+                isHolding = true;
+                holdStart = Date.now();
+                circle.classList.add('holding');
+                circle.querySelector('.gate-inner-text').textContent = 'HOLD...';
+                feedback.textContent = '';
+                feedback.classList.remove('error');
+
+                holdInterval = setInterval(updateProgress, 50);
+            }
+
+            function updateProgress() {
+                if (!isHolding) return;
+
+                const elapsed = Date.now() - holdStart;
+                const progress = Math.min(elapsed / HOLD_DURATION, 1);
+                const offset = CIRCUMFERENCE * (1 - progress);
+                progressRing.style.strokeDashoffset = offset;
+
+                if (progress >= 1) {
+                    completeGate();
+                }
+            }
+
+            function endHold(e) {
+                e.preventDefault();
+                if (!isHolding) return;
+
+                const elapsed = Date.now() - holdStart;
+
+                clearInterval(holdInterval);
+                isHolding = false;
+                circle.classList.remove('holding');
+
+                if (elapsed < HOLD_DURATION) {
+                    // Reset
+                    progressRing.style.strokeDashoffset = CIRCUMFERENCE;
+                    circle.querySelector('.gate-inner-text').textContent = 'HOLD';
+                    feedback.textContent = 'THE MACHINE IS PATIENT. TRY AGAIN.';
+                    feedback.classList.add('error');
+                }
+            }
+
+            function completeGate() {
+                clearInterval(holdInterval);
+                isHolding = false;
+
+                circle.querySelector('.gate-inner-text').textContent = '∞';
+                feedback.textContent = 'LET GO.';
+                feedback.classList.remove('error');
+
+                setTimeout(() => {
+                    gate.classList.add('hidden');
+                    initializeProtocol(); // Start directly
+                }, 2000);
+            }
+
+            // Touch events
+            circle.addEventListener('touchstart', startHold, { passive: false });
+            circle.addEventListener('touchend', endHold, { passive: false });
+            circle.addEventListener('touchcancel', endHold, { passive: false });
+
+            // Mouse events
+            circle.addEventListener('mousedown', startHold);
+            circle.addEventListener('mouseup', endHold);
+            circle.addEventListener('mouseleave', endHold);
+        })();
+
+        // === STATE ===
+        let audioPlaying = false;
+        let capturedData = {};
+        let downloadedArtifact = false, downloadedLog = false;
+        let breathCount = 0;
+        let protocolStarted = false;
+        let protocolCompleted = false;
+        let breathInterval = null;
+        let phaseInterval = null;
+
+        const BREATH_DURATION = 10000; // 10 seconds per full breath cycle (optimal for relaxation)
+        const PHASE_DURATION = 5000; // 5 seconds inhale, 5 seconds exhale
+
+        const audio = document.getElementById('bg-audio');
+        const mainInterface = document.getElementById('main-interface');
+        const audioToggle = document.getElementById('audio-toggle');
+        const breathContainer = document.getElementById('breath-container');
+        const breathPhase = document.getElementById('breath-phase');
+
+        // === INITIALIZE ===
+        function initializeProtocol() {
+            mainInterface.classList.add('active');
+
+            audio.play().then(() => {
+                audioPlaying = true;
+                audioToggle.textContent = 'AUDIO: ON';
+                audioToggle.classList.add('active');
+            }).catch(() => { });
+
+            typewriterEffect();
+            capturedData.startTime = Date.now();
+
+            // Start breathing after typewriter
+            setTimeout(() => {
+                protocolStarted = true;
+                startBreathing();
+            }, 3000);
+        }
+
+        // === TYPEWRITER EFFECT ===
+        function typewriterEffect() {
+            const text1 = "THE MACHINE NEVER BREATHES.";
+            const text2 = "YOU CAN.";
+            const element = document.getElementById('typewriter-text');
+            let i = 0;
+            let currentText = text1;
+            let line = 1;
+
+            function type() {
+                if (i < currentText.length) {
+                    element.innerHTML += currentText.charAt(i);
+                    i++;
+                    setTimeout(type, 40);
+                } else if (line === 1) {
+                    element.innerHTML += '<br>';
+                    currentText = text2;
+                    i = 0;
+                    line = 2;
+                    setTimeout(type, 300);
+                } else {
+                    element.classList.add('done');
+                }
+            }
+            type();
+        }
+
+        function toggleAudio() {
+            if (audioPlaying) {
+                audio.pause();
+                audioPlaying = false;
+                audioToggle.textContent = 'AUDIO: OFF';
+                audioToggle.classList.remove('active');
+            } else {
+                audio.play();
+                audioPlaying = true;
+                audioToggle.textContent = 'AUDIO: ON';
+                audioToggle.classList.add('active');
+            }
+        }
+
+        // === BREATHING MECHANICS ===
+        // CSS animations handle color and scale - we just update the phase text
+        function startBreathing() {
+            let isInhale = true;
+            breathPhase.textContent = 'INHALE';
+
+            // Toggle phase text every 5 seconds (synced with CSS animations)
+            phaseInterval = setInterval(() => {
+                isInhale = !isInhale;
+                breathPhase.textContent = isInhale ? 'INHALE' : 'EXHALE';
+            }, PHASE_DURATION);
+        }
+
+        function endProtocol(event) {
+            if (!protocolStarted || protocolCompleted) return;
+
+            // Don't end if clicking on controls
+            if (event.target.closest('.top-bar') || event.target.closest('.bottom-bar')) {
+                return;
+            }
+
+            protocolCompleted = true;
+            clearInterval(phaseInterval);
+
+            capturedData.endTime = Date.now();
+            capturedData.breathCount = breathCount;
+
+            // Hide instruction
+            document.getElementById('touch-instruction').style.display = 'none';
+            breathPhase.textContent = 'PROTOCOL COMPLETE';
+
+            document.getElementById('capture-overlay').classList.add('active');
+        }
+
+        // === ARTIFACT GENERATION ===
+        function generateArtifactCircles() {
+            // Pure white monolith - no circles, no data visualization
+            // The absence of data IS the point
+            const container = document.getElementById('art-circles');
+            container.innerHTML = '';
+        }
+
+        function downloadArtifact() {
+            generateArtifactCircles();
+
+            html2canvas(document.getElementById('art-container'), {
+                backgroundColor: '#ffffff',
+                scale: 1
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `THE_BREATH_ARTIFACT.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                downloadedArtifact = true;
+                checkUnlockPrint();
+            });
+        }
+
+        function downloadDataLog() {
+            const log = `
+THE BREATH // PROTOCOL ∞
+SYSTEM STATUS: BYPASSED
+==================================
+
+HASH: NULL
+SUBJECT: UNTRACKED
+DURATION: NOW
+
+----------------------------------
+ERROR: NO DATA FOUND.
+ERROR: CANNOT QUANTIFY SPIRIT.
+----------------------------------
+
+BREATH IS FREE.
+YOU ARE BREATH.
+YOU ARE FREE.
+
+==================================
+AUDIO: "Stillness" by AVERY LAKE
+© AVERY LAKE OFFICIAL // 2026
+END OF TRANSMISSION
+==================================
+      `.trim();
+
+            const blob = new Blob([log], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.download = `THE_BREATH_UN-DATA_LOG.txt`;
+            link.href = URL.createObjectURL(blob);
+            link.click();
+            downloadedLog = true;
+            checkUnlockPrint();
+        }
+
+        function checkUnlockPrint() {
+            if (downloadedArtifact && downloadedLog) {
+                const printBtn = document.getElementById('print-btn');
+                printBtn.classList.add('unlocked');
+                printBtn.style.opacity = '1';
+            }
+        }
+
+        function requestPrint() {
+            if (!downloadedArtifact || !downloadedLog) return;
+
+            const subject = `Protocol ∞ Commission Request`;
+            const body = `Dear Avery Lake,
+
+I have completed Protocol ∞: The Breath and would like to request a signed and certified physical copy.
+
+[IMPORTANT: I have attached BOTH the ARTIFACT IMAGE and the UN-DATA LOG to this email.]
+
+Please advise on commission details.
+
+TECHNICAL SPECIFICATIONS:
+- Size: 18″ × 24″ (recommended). Other sizes available upon request.`;
+
+            window.location.href = `mailto:hello@averylakeofficial.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }
+    </script>
+
+</body>
+
+</html>
